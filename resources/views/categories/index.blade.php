@@ -358,6 +358,10 @@ tbody tr:hover{
         <a href="/categories" class="active">Categories</a>
         <a href="/suppliers">Suppliers</a>
         <a href="/analytics">Analytics</a>
+        <a href="/activity-logs">
+    Activity Logs
+</a>
+
         <a href="/profile">
     Settings
 </a>

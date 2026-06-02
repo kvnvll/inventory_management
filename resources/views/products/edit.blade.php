@@ -219,6 +219,10 @@ input:focus, select:focus{
         <a href="/categories">Categories</a>
         <a href="/suppliers">Suppliers</a>
         <a href="/analytics">Analytics</a>
+        <a href="/activity-logs">
+    Activity Logs
+</a>
+
         <a href="/profile">
     Settings
 </a>
@@ -240,77 +244,124 @@ input:focus, select:focus{
     <!-- FORM -->
     <div class="form-card">
 
-        <form action="/products/{{ $product->id }}" method="POST">
+       <form action="/products/{{ $product->id }}" method="POST">
 
-            @csrf
-            @method('PUT')
+    @csrf
+    @method('PUT')
 
-            <div class="form-grid">
+    @if ($errors->any())
+        <div style="
+            background:#fee2e2;
+            color:#991b1b;
+            padding:15px;
+            margin-bottom:20px;
+            border-radius:10px;
+        ">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
-                <div class="form-group">
-                    <label>Product Name</label>
-                    <input type="text" name="name" value="{{ $product->name }}" required>
-                </div>
+    <div class="form-grid">
 
-                <div class="form-group">
-                    <label>Barcode</label>
-                    <input type="text" name="barcode" value="{{ $product->barcode }}" required>
-                </div>
+        <div class="form-group">
+            <label>Product Name</label>
+            <input
+                type="text"
+                name="name"
+                value="{{ $product->name }}"
+                required>
+        </div>
 
-                <div class="form-group">
-                    <label>Price</label>
-                    <input type="number" step="0.01" name="price" value="{{ $product->price }}" required>
-                </div>
+        <div class="form-group">
+            <label>Barcode</label>
+            <input
+                type="text"
+                name="barcode"
+                value="{{ $product->barcode }}"
+                required>
+        </div>
 
-                <div class="form-group">
-                    <label>Stock</label>
-                    <input type="number" name="stock" value="{{ $product->stock }}" required>
-                </div>
+        <div class="form-group">
+            <label>Price</label>
+            <input
+                type="number"
+                step="0.01"
+                name="price"
+                value="{{ $product->price }}"
+                required>
+        </div>
 
-                <div class="form-group">
-                    <label>Supplier</label>
-                    <select name="supplier_id" required>
-                        @foreach($suppliers as $supplier)
-                            <option value="{{ $supplier->id }}"
-                                {{ $product->supplier_id == $supplier->id ? 'selected' : '' }}>
-                                {{ $supplier->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
+        <div class="form-group">
+            <label>Stock</label>
+            <input
+                type="number"
+                name="stock"
+                value="{{ $product->stock }}"
+                required>
+        </div>
 
-                <div class="form-group">
-                    <label>Category</label>
-                    <select name="category_id" required>
-                        @foreach($categories as $category)
-                            <option value="{{ $category->id }}"
-                                {{ $product->category_id == $category->id ? 'selected' : '' }}>
-                                {{ $category->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
+        <div class="form-group">
+            <label>Low Stock Limit</label>
+            <input
+                type="number"
+                name="low_stock_limit"
+                value="{{ $product->low_stock_limit }}"
+                required>
+        </div>
 
-                <div class="form-group full">
-                    <label>Expiration Date</label>
-                    <input type="date" name="expiration_date" value="{{ $product->expiration_date }}">
-                </div>
+        <div class="form-group">
+            <label>Supplier</label>
+            <select name="supplier_id" required>
+                @foreach($suppliers as $supplier)
+                    <option
+                        value="{{ $supplier->id }}"
+                        {{ $product->supplier_id == $supplier->id ? 'selected' : '' }}>
+                        {{ $supplier->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
 
-            </div>
+        <div class="form-group">
+            <label>Category</label>
+            <select name="category_id" required>
+                @foreach($categories as $category)
+                    <option
+                        value="{{ $category->id }}"
+                        {{ $product->category_id == $category->id ? 'selected' : '' }}>
+                        {{ $category->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
 
-            <div class="actions">
+        <div class="form-group">
+            <label>Expiration Date</label>
+            <input
+                type="date"
+                name="expiration_date"
+                value="{{ $product->expiration_date ? \Carbon\Carbon::parse($product->expiration_date)->format('Y-m-d') : '' }}">
+        </div>
 
-                <button type="submit" class="btn btn-update">
-                    Update Product
-                </button>
+    </div>
 
-                <a href="/products" class="btn btn-back">
-                    Back
-                </a>
+    <div class="actions">
 
-            </div>
+        <button type="submit" class="btn btn-update">
+            Update Product
+        </button>
 
-        </form>
+        <a href="/products" class="btn btn-back">
+            Back
+        </a>
+
+    </div>
+
+</form>
 
     </div>
 

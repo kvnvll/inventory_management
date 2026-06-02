@@ -249,6 +249,10 @@ input:focus{
         <a href="/analytics">
             Analytics
         </a>
+        <a href="/activity-logs">
+    Activity Logs
+</a>
+
         <a href="/profile">
     Settings
 </a>

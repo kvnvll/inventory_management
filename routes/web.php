@@ -15,12 +15,15 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ImportController;
+use App\Http\Controllers\ActivityLogController;
 
 Route::get('/', function () {
     return redirect('/dashboard');
 });
 
 Route::middleware(['auth'])->group(function () {
+    
+Route::get('/activity-logs', [ActivityLogController::class, 'index']);
 
     /*
     |--------------------------------------------------------------------------

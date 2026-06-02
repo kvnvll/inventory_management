@@ -145,31 +145,32 @@ body{
 
 .cards{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
     gap:20px;
-    margin-bottom:25px;
+    margin-bottom:28px;
 }
 
 .card{
-    border-radius:20px;
-    padding:28px;
+    position:relative;
+    overflow:hidden;
+
+    min-height:160px;
+    height:160px;
+
+    border-radius:18px;
+    padding:24px;
+
     color:white;
-    transition:.3s;
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
-}
 
-.card:hover{
-    transform:translateY(-5px);
-}
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
 
-.card-title{
-    font-size:14px;
-    opacity:.9;
-    margin-bottom:12px;
+    transition:.25s ease;
 }
 
 .card-value{
-    font-size:38px;
+    font-size:48px;
     font-weight:700;
 }
 
@@ -242,6 +243,22 @@ body{
     transform:translateY(-2px);
 }
 
+.purple{
+    background:linear-gradient(
+        135deg,
+        #7c3aed,
+        #6d28d9
+    );
+}
+
+.dark{
+    background:linear-gradient(
+        135deg,
+        #334155,
+        #1e293b
+    );
+}
+
 /* RESPONSIVE */
 
 @media(max-width:768px){
@@ -269,376 +286,372 @@ body{
 </style>
 </head>
 
-<body>
+    <body>
 
-<!-- SIDEBAR -->
-<div class="sidebar">
-
-    <div>
-
-        <div class="logo">
-            KAK<BR> Mini Mart
-        </div>
-
-        <div class="menu">
-
-            <a href="/dashboard" class="active">
-                Dashboard
-            </a>
-
-            <a href="/products">
-                Products
-            </a>
-
-            <a href="/categories">
-                Categories
-            </a>
-
-            <a href="/suppliers">
-                Suppliers
-            </a>
-
-            <a href="/analytics">
-                Analytics
-            </a>
-            <a href="/profile">
-    Settings
-</a>
-
-        </div>
-
-    </div>
-
-    <form method="POST"
-          action="{{ route('logout') }}"
-          class="logout-form">
-
-        @csrf
-
-        <button type="submit"
-                class="logout-btn">
-
-            Logout
-
-        </button>
-
-    </form>
-
-</div>
-
-<!-- MAIN -->
-<div class="main">
-
-    <!-- HEADER -->
-
-    <div class="topbar">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
 
         <div>
 
-            <h1>
-                Dashboard
-            </h1>
+            <div class="logo">
+                KAK<BR> Mini Mart
+            </div>
 
-            <div class="subtitle">
-                Mini Mart Inventory Management System
+            <div class="menu">
+
+                <a href="/dashboard" class="active">
+                    Dashboard
+                </a>
+
+                <a href="/products">
+                    Products
+                </a>
+
+                <a href="/categories">
+                    Categories
+                </a>
+
+                <a href="/suppliers">
+                    Suppliers
+                </a>
+
+                <a href="/analytics">
+                    Analytics
+                </a>
+                <a href="/profile">
+        Settings
+    </a><a href="/analytics">Analytics</a>
+
+<a href="/activity-logs">
+    Activity Logs
+</a>
+
+
             </div>
 
         </div>
 
-        <div class="admin-box">
-            Administrator
+        <form method="POST"
+            action="{{ route('logout') }}"
+            class="logout-form">
+
+            @csrf
+
+            <button type="submit"
+                    class="logout-btn">
+
+                Logout
+
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- MAIN -->
+    <div class="main">
+
+        <!-- HEADER -->
+
+        <div class="topbar">
+
+            <div>
+
+                <h1>
+                    Dashboard
+                </h1>
+
+                <div class="subtitle">
+                    Mini Mart Inventory Management System
+                </div>
+
+            </div>
+
+            <div class="admin-box">
+                Administrator
+            </div>
+
+        </div>
+<div class="cards">
+
+    <div class="card purple">
+    <div class="card-title">Expired Products</div>
+    <div class="card-value">
+        {{ $expiredProducts ?? 0 }}
+    </div>
+</div>
+
+<div class="card dark">
+    <div class="card-title">Inventory Value</div>
+    <div class="card-value">
+        ₱{{ number_format($inventoryValue ?? 0, 2) }}
+    </div>
+</div>
+
+<div class="card blue">
+    <div class="card-title">Total Products</div>
+    <div class="card-value">
+        {{ $totalProducts ?? 0 }}
+    </div>
+</div>
+
+<div class="card green">
+    <div class="card-title">Total Categories</div>
+    <div class="card-value">
+        {{ $totalCategories ?? 0 }}
+    </div>
+</div>
+
+<div class="card orange">
+    <div class="card-title">Low Stock Items</div>
+    <div class="card-value">
+        {{ $lowStock ?? 0 }}
+    </div>
+</div>
+
+<div class="card red">
+    <div class="card-title">Total Suppliers</div>
+    <div class="card-value">
+        {{ $totalSuppliers ?? 0 }}
+    </div>
+</div>
+
+</div>
+
+        <!-- SYSTEM SUMMARY -->
+
+        <div class="info-box" style="margin-bottom:25px;">
+
+            <h2>
+                System Summary
+            </h2>
+
+            <p>
+
+                Products:
+                <strong>{{ $totalProducts ?? 0 }}</strong>
+
+                |
+
+                Categories:
+                <strong>{{ $totalCategories ?? 0 }}</strong>
+
+                |
+
+                Suppliers:
+                <strong>{{ $totalSuppliers ?? 0 }}</strong>
+
+                |
+
+                Low Stock:
+                <strong>{{ $lowStock ?? 0 }}</strong>
+
+            </p>
+
+        </div>
+
+
+    <!-- DASHBOARD CONTENT -->
+
+    <div class="info-section">
+
+        <!-- LEFT SIDE -->
+
+        <div>
+
+            <div class="info-box" style="margin-bottom:20px;">
+
+                <h2>
+                    Recent Activity
+                </h2>
+
+                <p>
+                    ✓ New products added to inventory today.
+                </p>
+
+                <p>
+                    ✓ Supplier records successfully updated.
+                </p>
+
+                <p>
+                    ✓ Inventory analysis generated automatically.
+                </p>
+
+                <p>
+                    ✓ Low stock items detected and flagged.
+                </p>
+
+            </div>
+
+            <div class="info-box">
+
+                <h2>
+                    Inventory Health
+                </h2>
+
+                <p>
+
+                    The inventory currently contains
+                    <strong>{{ $totalProducts ?? 0 }}</strong>
+                    registered products across
+                    <strong>{{ $totalCategories ?? 0 }}</strong>
+                    categories.
+
+                </p>
+
+                <br>
+
+                <p>
+
+                    There are currently
+                    <strong>{{ $lowStock ?? 0 }}</strong>
+                    low stock products requiring attention.
+
+                </p>
+
+                <br>
+
+                <p>
+
+                    Supplier network consists of
+                    <strong>{{ $totalSuppliers ?? 0 }}</strong>
+                    active suppliers supporting inventory operations.
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT SIDE -->
+
+        <div>
+
+            <div class="quick-box" style="margin-bottom:20px;">
+
+                <h2>
+                    Quick Actions
+                </h2>
+
+                <div class="quick-links">
+
+                    <a href="/products/create">
+                        Add Product
+                    </a>
+
+                    <a href="/categories/create">
+                        Add Category
+                    </a>
+
+                    <a href="/suppliers/create">
+                        Add Supplier
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div class="quick-box">
+
+                <h2>
+                    System Status
+                </h2>
+
+                <div style="display:flex;flex-direction:column;gap:12px;">
+
+                    <div>
+                        🟢 Inventory System Online
+                    </div>
+
+                    <div>
+                        🟢 Database Connected
+                    </div>
+
+                    <div>
+                        🟢 Supplier Records Active
+                    </div>
+
+                    <div>
+                        🟢 Daily Monitoring Enabled
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
 
     </div>
 
-    <!-- STATS -->
+    <!-- PERFORMANCE SECTION -->
 
-    <div class="cards">
-
-        <div class="card blue">
-
-            <div class="card-title">
-                Total Products
-            </div>
-
-            <div class="card-value">
-                {{ $totalProducts ?? 0 }}
-            </div>
-
-        </div>
-
-        <div class="card green">
-
-            <div class="card-title">
-                Total Categories
-            </div>
-
-            <div class="card-value">
-                {{ $totalCategories ?? 0 }}
-            </div>
-
-        </div>
-
-        <div class="card orange">
-
-            <div class="card-title">
-                Low Stock Items
-            </div>
-
-            <div class="card-value">
-                {{ $lowStock ?? 0 }}
-            </div>
-
-        </div>
-
-        <div class="card red">
-
-            <div class="card-title">
-                Total Suppliers
-            </div>
-
-            <div class="card-value">
-                {{ $totalSuppliers ?? 0 }}
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- SYSTEM SUMMARY -->
-
-    <div class="info-box" style="margin-bottom:25px;">
+    <div class="info-box" style="margin-top:25px;">
 
         <h2>
-            System Summary
+            Store Performance Snapshot
         </h2>
 
         <p>
 
-            Products:
+            Total Products:
             <strong>{{ $totalProducts ?? 0 }}</strong>
 
-            |
+        </p>
 
-            Categories:
-            <strong>{{ $totalCategories ?? 0 }}</strong>
+        <br>
 
-            |
+        <p>
 
-            Suppliers:
+            Active Suppliers:
             <strong>{{ $totalSuppliers ?? 0 }}</strong>
 
-            |
+        </p>
 
-            Low Stock:
+        <br>
+
+        <p>
+
+            Product Categories:
+            <strong>{{ $totalCategories ?? 0 }}</strong>
+
+        </p>
+
+        <br>
+
+        <p>
+
+            Low Stock Alerts:
             <strong>{{ $lowStock ?? 0 }}</strong>
 
         </p>
 
     </div>
 
+    <!-- REMINDERS -->
 
-<!-- DASHBOARD CONTENT -->
+    <div class="info-box" style="margin-top:25px;">
 
-<div class="info-section">
+        <h2>
+            Reminders
+        </h2>
 
-    <!-- LEFT SIDE -->
+        <p>
+            • Review low stock products regularly.
+        </p>
 
-    <div>
+        <p>
+            • Keep supplier information updated.
+        </p>
 
-        <div class="info-box" style="margin-bottom:20px;">
+        <p>
+            • Monitor inventory analytics for trends.
+        </p>
 
-            <h2>
-                Recent Activity
-            </h2>
-
-            <p>
-                ✓ New products added to inventory today.
-            </p>
-
-            <p>
-                ✓ Supplier records successfully updated.
-            </p>
-
-            <p>
-                ✓ Inventory analysis generated automatically.
-            </p>
-
-            <p>
-                ✓ Low stock items detected and flagged.
-            </p>
-
-        </div>
-
-        <div class="info-box">
-
-            <h2>
-                Inventory Health
-            </h2>
-
-            <p>
-
-                The inventory currently contains
-                <strong>{{ $totalProducts ?? 0 }}</strong>
-                registered products across
-                <strong>{{ $totalCategories ?? 0 }}</strong>
-                categories.
-
-            </p>
-
-            <br>
-
-            <p>
-
-                There are currently
-                <strong>{{ $lowStock ?? 0 }}</strong>
-                low stock products requiring attention.
-
-            </p>
-
-            <br>
-
-            <p>
-
-                Supplier network consists of
-                <strong>{{ $totalSuppliers ?? 0 }}</strong>
-                active suppliers supporting inventory operations.
-
-            </p>
-
-        </div>
+        <p>
+            • Perform weekly inventory audits.
+        </p>
 
     </div>
 
-    <!-- RIGHT SIDE -->
-
-    <div>
-
-        <div class="quick-box" style="margin-bottom:20px;">
-
-            <h2>
-                Quick Actions
-            </h2>
-
-            <div class="quick-links">
-
-                <a href="/products/create">
-                    Add Product
-                </a>
-
-                <a href="/categories/create">
-                    Add Category
-                </a>
-
-                <a href="/suppliers/create">
-                    Add Supplier
-                </a>
-
-            </div>
-
-        </div>
-
-        <div class="quick-box">
-
-            <h2>
-                System Status
-            </h2>
-
-            <div style="display:flex;flex-direction:column;gap:12px;">
-
-                <div>
-                    🟢 Inventory System Online
-                </div>
-
-                <div>
-                    🟢 Database Connected
-                </div>
-
-                <div>
-                    🟢 Supplier Records Active
-                </div>
-
-                <div>
-                    🟢 Daily Monitoring Enabled
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-<!-- PERFORMANCE SECTION -->
-
-<div class="info-box" style="margin-top:25px;">
-
-    <h2>
-        Store Performance Snapshot
-    </h2>
-
-    <p>
-
-        Total Products:
-        <strong>{{ $totalProducts ?? 0 }}</strong>
-
-    </p>
-
-    <br>
-
-    <p>
-
-        Active Suppliers:
-        <strong>{{ $totalSuppliers ?? 0 }}</strong>
-
-    </p>
-
-    <br>
-
-    <p>
-
-        Product Categories:
-        <strong>{{ $totalCategories ?? 0 }}</strong>
-
-    </p>
-
-    <br>
-
-    <p>
-
-        Low Stock Alerts:
-        <strong>{{ $lowStock ?? 0 }}</strong>
-
-    </p>
-
-</div>
-
-<!-- REMINDERS -->
-
-<div class="info-box" style="margin-top:25px;">
-
-    <h2>
-        Reminders
-    </h2>
-
-    <p>
-        • Review low stock products regularly.
-    </p>
-
-    <p>
-        • Keep supplier information updated.
-    </p>
-
-    <p>
-        • Monitor inventory analytics for trends.
-    </p>
-
-    <p>
-        • Perform weekly inventory audits.
-    </p>
-
-</div>
-
-</body>
-</html>
+    </body>
+    </html>

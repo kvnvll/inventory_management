@@ -242,6 +242,10 @@
                 Suppliers
             </a>
             <a href="/analytics">Analytics</a>
+            <a href="/activity-logs">
+    Activity Logs
+</a>
+
             <a href="/profile">
     Settings
 </a>
@@ -406,6 +410,20 @@
                                required>
 
                     </div>
+
+                    <!-- LOW STOCK LIMIT -->
+
+<div class="form-group">
+
+    <label>Low Stock Limit</label>
+
+    <input type="number"
+           name="low_stock_limit"
+           placeholder="Enter low stock limit"
+           value="{{ old('low_stock_limit', 10) }}"
+           required>
+
+</div>
 
                     <!-- EXPIRATION -->
 

@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Imports\ProductsImport;
 use App\Imports\CategoriesImport;
 use App\Imports\SuppliersImport;
-use App\Http\Controllers\ImportController;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ImportController extends Controller

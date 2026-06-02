@@ -19,24 +19,25 @@ class SupplierController extends Controller
         return view('suppliers.create');
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'contact' => 'required',
-            'address' => 'required'
-        ]);
+   public function store(Request $request)
+{
+    $request->validate([
+        'name' => 'required',
+        'contact' => 'required',
+        'address' => 'required'
+    ]);
 
-        Supplier::create([
-            'name' => $request->name,
-            'contact' => $request->contact,
-            'address' => $request->address
-        ]);
+    $supplier = Supplier::create([
+        'name' => $request->name,
+        'contact' => $request->contact,
+        'address' => $request->address
+    ]);
 
-        return redirect('/suppliers')
-            ->with('success', 'Supplier added successfully.');
-    }
-
+    return response()->json([
+        'success' => true,
+        'data' => $supplier
+    ]);
+}
     public function edit($id)
     {
         $supplier = Supplier::findOrFail($id);

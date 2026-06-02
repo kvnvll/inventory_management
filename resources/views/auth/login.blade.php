@@ -6,7 +6,6 @@
 <title>Mini Mart Login</title>
 
 <style>
-
 *{
     margin:0;
     padding:0;
@@ -14,58 +13,145 @@
 }
 
 body{
-    font-family:Arial,sans-serif;
+    font-family:'Segoe UI',sans-serif;
     background:#f1f5f9;
     display:flex;
     justify-content:center;
     align-items:center;
-    height:100vh;
+    min-height:100vh;
+    padding:20px;
 }
 
+/* MAIN CARD */
 .login-container{
-    width:900px;
-    height:500px;
+    width:1000px;
+    min-height:550px;
     display:flex;
-    border-radius:20px;
-    overflow:hidden;
-    box-shadow:0 10px 30px rgba(0,0,0,.1);
     background:white;
+    border-radius:24px;
+    overflow:hidden;
+    box-shadow:
+        0 20px 50px rgba(15,23,42,.15),
+        0 5px 15px rgba(15,23,42,.05);
+    animation:float 5s ease-in-out infinite;
 }
 
+@keyframes float{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-6px);
+    }
+}
+
+/* LEFT SIDE */
 .left{
     width:45%;
-    background:#0f172a;
+    background:linear-gradient(
+        135deg,
+        #0f172a,
+        #1e293b
+    );
     color:white;
-    padding:50px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-}
-
-.left h1{
-    font-size:42px;
-    color:#38bdf8;
-    margin-bottom:15px;
-}
-
-.left p{
-    color:#cbd5e1;
-    line-height:1.6;
-}
-
-.right{
-    width:55%;
     padding:60px;
     display:flex;
     flex-direction:column;
     justify-content:center;
+    position:relative;
+    overflow:hidden;
 }
 
+.left::before{
+    content:"";
+    position:absolute;
+    width:280px;
+    height:280px;
+    border-radius:50%;
+    background:rgba(56,189,248,.08);
+    top:-80px;
+    right:-80px;
+}
+
+.left::after{
+    content:"";
+    position:absolute;
+    width:200px;
+    height:200px;
+    border-radius:50%;
+    background:rgba(56,189,248,.05);
+    bottom:-70px;
+    left:-70px;
+}
+
+.left h1{
+    font-size:46px;
+    color:#38bdf8;
+    margin-bottom:20px;
+    position:relative;
+    z-index:2;
+}
+
+.left p{
+    color:#cbd5e1;
+    line-height:1.8;
+    font-size:16px;
+    position:relative;
+    z-index:2;
+}
+
+/* FEATURE LIST */
+.feature-list{
+    margin-top:35px;
+    position:relative;
+    z-index:2;
+}
+
+.feature-list div{
+    margin-bottom:14px;
+    color:#e2e8f0;
+    font-size:15px;
+}
+
+/* RIGHT SIDE */
+.right{
+    width:55%;
+    padding:70px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+/* BADGE */
+.badge{
+    display:inline-block;
+    width:max-content;
+    background:#dbeafe;
+    color:#2563eb;
+    padding:8px 14px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:15px;
+}
+
+/* TITLES */
 .title{
-    font-size:32px;
-    font-weight:bold;
-    margin-bottom:30px;
+    font-size:36px;
+    font-weight:700;
     color:#0f172a;
+    margin-bottom:8px;
+}
+
+.subtitle{
+    color:#64748b;
+    margin-bottom:35px;
+    font-size:15px;
+}
+
+/* FORM */
+form{
+    width:100%;
 }
 
 .input-group{
@@ -76,62 +162,141 @@ body{
     display:block;
     margin-bottom:8px;
     color:#334155;
+    font-size:14px;
     font-weight:600;
 }
 
 .input-group input{
     width:100%;
-    padding:14px;
+    padding:15px 18px;
     border:1px solid #cbd5e1;
-    border-radius:10px;
+    border-radius:12px;
+    background:#f8fafc;
     font-size:15px;
+    transition:.3s;
 }
 
 .input-group input:focus{
     outline:none;
     border-color:#2563eb;
+    background:white;
+    box-shadow:0 0 0 4px rgba(37,99,235,.12);
 }
 
+/* REMEMBER */
+.remember{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:20px;
+    color:#475569;
+    font-size:14px;
+}
+
+.remember input{
+    accent-color:#2563eb;
+}
+
+/* BUTTON */
 .login-btn{
     width:100%;
-    padding:14px;
+    padding:15px;
     border:none;
-    border-radius:10px;
+    border-radius:12px;
     background:#2563eb;
     color:white;
     font-size:15px;
-    font-weight:bold;
+    font-weight:700;
     cursor:pointer;
+    transition:.3s;
 }
 
 .login-btn:hover{
     background:#1d4ed8;
+    transform:translateY(-2px);
+    box-shadow:0 12px 25px rgba(37,99,235,.25);
 }
 
+/* LINKS */
+.forgot-link{
+    text-align:center;
+    margin-top:18px;
+}
+
+.forgot-link a{
+    color:#64748b;
+    text-decoration:none;
+    font-size:14px;
+    transition:.3s;
+}
+
+.forgot-link a:hover{
+    color:#2563eb;
+}
+
+/* DIVIDER */
+.divider{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin:25px 0;
+    color:#94a3b8;
+    font-size:13px;
+}
+
+.divider::before,
+.divider::after{
+    content:"";
+    flex:1;
+    height:1px;
+    background:#e2e8f0;
+}
+
+/* REGISTER */
 .register-link{
-    margin-top:15px;
     text-align:center;
 }
 
 .register-link a{
     color:#2563eb;
     text-decoration:none;
+    font-weight:600;
+    transition:.3s;
 }
 
-/* NEW: forgot password */
-.forgot-link{
-    margin-top:10px;
-    text-align:center;
-    font-size:14px;
+.register-link a:hover{
+    color:#1d4ed8;
 }
 
-.forgot-link a{
-    color:#64748b;
-    text-decoration:none;
-}
+/* RESPONSIVE */
+@media(max-width:900px){
 
-.forgot-link a:hover{
-    color:#2563eb;
+    .login-container{
+        width:100%;
+        flex-direction:column;
+        min-height:auto;
+    }
+
+    .left,
+    .right{
+        width:100%;
+    }
+
+    .left{
+        padding:40px;
+    }
+
+    .right{
+        padding:40px;
+    }
+
+    .title{
+        font-size:30px;
+    }
+
+    .left h1{
+        font-size:36px;
+    }
 }
 
 </style>
@@ -153,6 +318,18 @@ body{
     </div>
 
     <div class="right">
+
+        <div class="badge">
+    Welcome Back
+</div>
+
+<div class="title">
+    Sign In
+</div>
+
+<div class="subtitle">
+    Access your inventory dashboard
+</div>
 
         <div class="title">
             Login

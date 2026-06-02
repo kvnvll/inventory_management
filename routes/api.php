@@ -12,23 +12,13 @@ use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-*/
-
-Route::apiResource('products', ProductController::class);
-Route::apiResource('suppliers', SupplierController::class);
-Route::apiResource('categories', CategoryController::class);
-Route::apiResource('inventories', InventoryController::class);
-Route::apiResource('stock-movements', StockMovementController::class);
-
-/*
-|--------------------------------------------------------------------------
-| Reset Products
+| RESET ROUTES FIRST
 |--------------------------------------------------------------------------
 */
 
 Route::delete('/products/reset', function () {
+
+    $before = \App\Models\Product::count();
 
     \App\Models\Product::query()->delete();
 
@@ -36,17 +26,15 @@ Route::delete('/products/reset', function () {
 
     return response()->json([
         'success' => true,
+        'before' => $before,
+        'after' => \App\Models\Product::count(),
         'message' => 'All products deleted and IDs reset.'
     ]);
 });
 
-/*
-|--------------------------------------------------------------------------
-| Reset Categories
-|--------------------------------------------------------------------------
-*/
-
 Route::delete('/categories/reset', function () {
+
+    $before = \App\Models\Category::count();
 
     \App\Models\Category::query()->delete();
 
@@ -54,17 +42,15 @@ Route::delete('/categories/reset', function () {
 
     return response()->json([
         'success' => true,
+        'before' => $before,
+        'after' => \App\Models\Category::count(),
         'message' => 'All categories deleted and IDs reset.'
     ]);
 });
 
-/*
-|--------------------------------------------------------------------------
-| Reset Suppliers
-|--------------------------------------------------------------------------
-*/
-
 Route::delete('/suppliers/reset', function () {
+
+    $before = \App\Models\Supplier::count();
 
     \App\Models\Supplier::query()->delete();
 
@@ -72,17 +58,15 @@ Route::delete('/suppliers/reset', function () {
 
     return response()->json([
         'success' => true,
+        'before' => $before,
+        'after' => \App\Models\Supplier::count(),
         'message' => 'All suppliers deleted and IDs reset.'
     ]);
 });
 
-/*
-|--------------------------------------------------------------------------
-| Reset Inventories
-|--------------------------------------------------------------------------
-*/
-
 Route::delete('/inventories/reset', function () {
+
+    $before = \App\Models\Inventory::count();
 
     \App\Models\Inventory::query()->delete();
 
@@ -90,17 +74,15 @@ Route::delete('/inventories/reset', function () {
 
     return response()->json([
         'success' => true,
+        'before' => $before,
+        'after' => \App\Models\Inventory::count(),
         'message' => 'All inventories deleted and IDs reset.'
     ]);
 });
 
-/*
-|--------------------------------------------------------------------------
-| Reset Stock Movements
-|--------------------------------------------------------------------------
-*/
-
 Route::delete('/stock-movements/reset', function () {
+
+    $before = \App\Models\StockMovement::count();
 
     \App\Models\StockMovement::query()->delete();
 
@@ -108,15 +90,11 @@ Route::delete('/stock-movements/reset', function () {
 
     return response()->json([
         'success' => true,
+        'before' => $before,
+        'after' => \App\Models\StockMovement::count(),
         'message' => 'All stock movements deleted and IDs reset.'
     ]);
 });
-
-/*
-|--------------------------------------------------------------------------
-| Reset Everything
-|--------------------------------------------------------------------------
-*/
 
 Route::delete('/reset-all', function () {
 
@@ -140,7 +118,7 @@ Route::delete('/reset-all', function () {
 
 /*
 |--------------------------------------------------------------------------
-| Delete Range - Products
+| DELETE RANGE ROUTES
 |--------------------------------------------------------------------------
 */
 
@@ -154,12 +132,6 @@ Route::delete('/products/reset-range/{start}/{end}', function ($start, $end) {
     ]);
 });
 
-/*
-|--------------------------------------------------------------------------
-| Delete Range - Categories
-|--------------------------------------------------------------------------
-*/
-
 Route::delete('/categories/reset-range/{start}/{end}', function ($start, $end) {
 
     \App\Models\Category::whereBetween('id', [$start, $end])->delete();
@@ -169,12 +141,6 @@ Route::delete('/categories/reset-range/{start}/{end}', function ($start, $end) {
         'message' => "Categories {$start} to {$end} deleted."
     ]);
 });
-
-/*
-|--------------------------------------------------------------------------
-| Delete Range - Suppliers
-|--------------------------------------------------------------------------
-*/
 
 Route::delete('/suppliers/reset-range/{start}/{end}', function ($start, $end) {
 
@@ -186,12 +152,6 @@ Route::delete('/suppliers/reset-range/{start}/{end}', function ($start, $end) {
     ]);
 });
 
-/*
-|--------------------------------------------------------------------------
-| Delete Range - Inventories
-|--------------------------------------------------------------------------
-*/
-
 Route::delete('/inventories/reset-range/{start}/{end}', function ($start, $end) {
 
     \App\Models\Inventory::whereBetween('id', [$start, $end])->delete();
@@ -202,12 +162,6 @@ Route::delete('/inventories/reset-range/{start}/{end}', function ($start, $end) 
     ]);
 });
 
-/*
-|--------------------------------------------------------------------------
-| Delete Range - Stock Movements
-|--------------------------------------------------------------------------
-*/
-
 Route::delete('/stock-movements/reset-range/{start}/{end}', function ($start, $end) {
 
     \App\Models\StockMovement::whereBetween('id', [$start, $end])->delete();
@@ -217,3 +171,15 @@ Route::delete('/stock-movements/reset-range/{start}/{end}', function ($start, $e
         'message' => "Stock Movements {$start} to {$end} deleted."
     ]);
 });
+
+/*
+|--------------------------------------------------------------------------
+| API RESOURCES LAST
+|--------------------------------------------------------------------------
+*/
+
+Route::apiResource('products', ProductController::class);
+Route::apiResource('suppliers', SupplierController::class);
+Route::apiResource('categories', CategoryController::class);
+Route::apiResource('inventories', InventoryController::class);
+Route::apiResource('stock-movements', StockMovementController::class);

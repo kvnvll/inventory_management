@@ -19,19 +19,21 @@ class CategoryController extends Controller
         return view('categories.create');
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required'
-        ]);
+   public function store(Request $request)
+{
+    $request->validate([
+        'name' => 'required'
+    ]);
 
-        Category::create([
-            'name' => $request->name
-        ]);
+    $category = Category::create([
+        'name' => $request->name
+    ]);
 
-        return redirect('/categories')
-            ->with('success', 'Category added successfully.');
-    }
+    return response()->json([
+        'success' => true,
+        'data' => $category
+    ]);
+}
 
     public function edit($id)
     {

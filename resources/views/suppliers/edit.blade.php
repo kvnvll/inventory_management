@@ -120,6 +120,10 @@
         <a href="/categories">Categories</a>
         <a href="/suppliers">Suppliers</a>
         <a href="/analytics">Analytics</a>
+        <a href="/activity-logs">
+    Activity Logs
+</a>
+
         <a href="/profile">
     Settings
 </a>
