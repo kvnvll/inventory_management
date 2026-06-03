@@ -24,7 +24,7 @@ RUN mkdir -p storage/framework/cache \
 
 RUN chown -R www-data:www-data storage bootstrap/cache
 
-RUN a2enmod rewrite
+RUN a2dismod mpm_prefork && a2enmod mpm_worker && a2enmod rewrite
 
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 
