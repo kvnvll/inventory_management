@@ -15,14 +15,17 @@ WORKDIR /var/www/html
 
 COPY . .
 
+RUN mkdir -p database && touch database/database.sqlite
+
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-RUN mkdir -p storage/framework/cache \
+RUN mkdir -p \
+    storage/framework/cache \
     storage/framework/sessions \
     storage/framework/views \
     bootstrap/cache
 
-RUN chown -R www-data:www-data storage bootstrap/cache
+RUN chown -R www-data:www-data storage bootstrap/cache database
 
 RUN a2enmod rewrite
 
