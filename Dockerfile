@@ -1,6 +1,5 @@
 FROM php:8.4-apache
 
-# Install system dependencies
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
@@ -10,29 +9,15 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install zip gd \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# Enable Apache rewrite
-RUN a2enmod rewrite
-
-# Make absolutely sure only prefork MPM is enabled
-RUN a2dismod mpm_event || true
-RUN a2dismod mpm_worker || true
-RUN a2enmod mpm_prefork
 
 WORKDIR /var/www/html
 
 COPY . .
 
-# Laravel setup
-RUN mkdir -p database
-RUN touch database/database.sqlite
+RUN mkdir -p database && touch database/database.sqlite
 
-RUN composer install \
-    --no-dev \
-    --optimize-autoloader \
-    --no-interaction
+RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 RUN mkdir -p \
     storage/framework/cache \
@@ -40,16 +25,20 @@ RUN mkdir -p \
     storage/framework/views \
     bootstrap/cache
 
-RUN chown -R www-data:www-data \
-    storage \
-    bootstrap/cache \
-    database
+RUN chown -R www-data:www-data storage bootstrap/cache database
 
-# Use Laravel public directory
+RUN a2enmod rewrite
+
+# REMOVE ALL APACHE CONFIGS
+RUN rm -f /etc/apache2/mods-enabled/mpm_*.load
+RUN rm -f /etc/apache2/mods-enabled/mpm_*.conf
+
+# ENABLE ONLY PREFORK
+RUN a2enmod mpm_prefork
+
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 
-RUN sed -ri \
-    -e 's!/var/www/html!/var/www/html/public!g' \
+RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' \
     /etc/apache2/sites-available/*.conf
 
 EXPOSE 80
