@@ -1,4 +1,4 @@
-FROM php:8.4-apache
+FROM php:8.4-fpm
 
 RUN apt-get update && apt-get install -y \
     libzip-dev \
@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     git \
+    nginx \
     && docker-php-ext-install zip gd \
     && apt-get clean
 
@@ -24,13 +25,8 @@ RUN mkdir -p storage/framework/cache \
 
 RUN chown -R www-data:www-data storage bootstrap/cache
 
-RUN a2enmod rewrite
-
-ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
-
-RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' \
-    /etc/apache2/sites-available/*.conf
+COPY nginx.conf /etc/nginx/sites-available/default
 
 EXPOSE 80
 
-CMD ["apache2-foreground"]
+CMD sh -c "php-fpm -D && nginx -g 'daemon off;'"
