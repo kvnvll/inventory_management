@@ -1,31 +1,39 @@
 FROM php:8.4-apache
 
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    zip \
     libzip-dev \
     libpng-dev \
-    zip \
-    unzip \
-    git \
     && docker-php-ext-install zip gd \
-    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Enable Apache rewrite
+RUN a2enmod rewrite
+
+# Make absolutely sure only prefork MPM is enabled
+RUN a2dismod mpm_event || true
+RUN a2dismod mpm_worker || true
+RUN a2enmod mpm_prefork
 
 WORKDIR /var/www/html
 
 COPY . .
 
-# Create SQLite database
-RUN mkdir -p database && touch database/database.sqlite
+# Laravel setup
+RUN mkdir -p database
+RUN touch database/database.sqlite
 
-# Install PHP dependencies
 RUN composer install \
     --no-dev \
     --optimize-autoloader \
     --no-interaction
 
-# Laravel writable directories
 RUN mkdir -p \
     storage/framework/cache \
     storage/framework/sessions \
@@ -37,21 +45,12 @@ RUN chown -R www-data:www-data \
     bootstrap/cache \
     database
 
-# Apache modules
-RUN a2enmod rewrite
-
-# FIX: ensure only prefork MPM is enabled
-RUN a2dismod mpm_event || true \
-    && a2dismod mpm_worker || true \
-    && a2enmod mpm_prefork
-
-# Set Laravel public directory
+# Use Laravel public directory
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 
-RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' \
-    /etc/apache2/sites-available/*.conf \
-    /etc/apache2/apache2.conf \
-    /etc/apache2/conf-available/*.conf
+RUN sed -ri \
+    -e 's!/var/www/html!/var/www/html/public!g' \
+    /etc/apache2/sites-available/*.conf
 
 EXPOSE 80
 
