@@ -1,4 +1,4 @@
-FROM php:8.4-apache
+FROM php:8.4-fpm
 
 RUN apt-get update && apt-get install -y \
     libzip-dev \
@@ -6,6 +6,8 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     git \
+    nginx \
+    supervisor \
     && docker-php-ext-install zip gd \
     && apt-get clean
 
@@ -24,13 +26,14 @@ RUN mkdir -p storage/framework/cache \
 
 RUN chown -R www-data:www-data storage bootstrap/cache
 
-RUN a2enmod rewrite
+# Wire up the Nginx site configuration
+RUN rm /etc/nginx/sites-enabled/default
+COPY nginx.conf /etc/nginx/sites-available/default
+RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
-ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
-
-RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' \
-    /etc/apache2/sites-available/*.conf
+# Supervisor config to run Nginx + PHP-FPM together
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 EXPOSE 80
 
-CMD ["apache2-foreground"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
