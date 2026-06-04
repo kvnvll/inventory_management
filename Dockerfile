@@ -1,48 +1,57 @@
-FROM php:8.4-cli
+FROM php:8.4-apache
 
-# System dependencies
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
     zip \
     libzip-dev \
     libpng-dev \
-    sqlite3 \
-    && docker-php-ext-install zip gd pdo pdo_sqlite \
+    && docker-php-ext-install zip gd \
     && rm -rf /var/lib/apt/lists/*
 
-# Composer
+# Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-WORKDIR /app
+# Enable Apache rewrite
+RUN a2enmod rewrite
 
-# Copy application
+# Make absolutely sure only prefork MPM is enabled
+RUN a2dismod mpm_event || true
+RUN a2dismod mpm_worker || true
+RUN a2enmod mpm_prefork
+
+WORKDIR /var/www/html
+
 COPY . .
 
 # Laravel setup
-RUN mkdir -p database \
-    && touch database/database.sqlite
+RUN mkdir -p database
+RUN touch database/database.sqlite
 
-# Install dependencies
 RUN composer install \
     --no-dev \
     --optimize-autoloader \
     --no-interaction
 
-# Permissions
 RUN mkdir -p \
     storage/framework/cache \
     storage/framework/sessions \
     storage/framework/views \
     bootstrap/cache
 
-RUN chmod -R 775 storage bootstrap/cache
+RUN chown -R www-data:www-data \
+    storage \
+    bootstrap/cache \
+    database
 
-# Laravel optimization
-RUN php artisan config:clear || true
-RUN php artisan route:clear || true
-RUN php artisan view:clear || true
+# Use Laravel public directory
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 
-EXPOSE 8080
+RUN sed -ri \
+    -e 's!/var/www/html!/var/www/html/public!g' \
+    /etc/apache2/sites-available/*.conf
 
-CMD php artisan serve --host=0.0.0.0 --port=${PORT:-8080}
+EXPOSE 80
+
+CMD ["apache2-foreground"]
