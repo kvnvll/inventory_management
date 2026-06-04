@@ -1,4 +1,4 @@
-FROM php:8.4-apache
+FROM php:8.4-cli
 
 RUN apt-get update && apt-get install -y \
     git \
@@ -27,20 +27,6 @@ RUN mkdir -p \
 
 RUN chown -R www-data:www-data storage bootstrap/cache database
 
-RUN a2enmod rewrite
+EXPOSE 8080
 
-# REMOVE ALL APACHE CONFIGS
-RUN rm -f /etc/apache2/mods-enabled/mpm_*.load
-RUN rm -f /etc/apache2/mods-enabled/mpm_*.conf
-
-# ENABLE ONLY PREFORK
-RUN a2enmod mpm_prefork
-
-ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
-
-RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' \
-    /etc/apache2/sites-available/*.conf
-
-EXPOSE 80
-
-CMD ["apache2-foreground"]
+CMD php artisan serve --host=0.0.0.0 --port=${PORT:-8080}
