@@ -1,9 +1,9 @@
 Project Description
 The KAK Mini Mart Inventory Management System is designed to help manage inventory records, products, suppliers, and categories in a more organized way. Instead of writing records manually, users can use the system to store and manage information digitally.
 
-Developers
-Kevin Vila
-Kaela Ashley Nicole Zabat
+Developers:
+Kevin Vila,
+Kaela Ashley Nicole Zabat, and
 Aaron Daniel Legayo
 
 The system begins with the Login page. Users must enter their email and password before they can access the system. Laravel verifies the login credentials and creates a session for the user. If the credentials are correct, the user is redirected to the Dashboard. If not, the system displays an error message.
