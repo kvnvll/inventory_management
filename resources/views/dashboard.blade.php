@@ -318,13 +318,14 @@ body{
                 <a href="/analytics">
                     Analytics
                 </a>
-                <a href="/profile">
-        Settings
+                
     </a><a href="/analytics">Analytics</a>
 
 <a href="/activity-logs">
     Activity Logs
 </a>
+<a href="/profile">
+        Settings </a>
 
 
             </div>
