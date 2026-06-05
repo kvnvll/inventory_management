@@ -318,8 +318,6 @@ body{
                 <a href="/analytics">
                     Analytics
                 </a>
-                
-    </a><a href="/analytics">Analytics</a>
 
 <a href="/activity-logs">
     Activity Logs
