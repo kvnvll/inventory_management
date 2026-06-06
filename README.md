@@ -1,5 +1,5 @@
 **KAK Mini Mart Inventory Management System (KMMIMS)**
-The KAK Mini Mart Inventory Management System is designed to help manage inventory records, products, suppliers, and categories in a more organized way. Instead of writing records manually, users can use the system to store and manage information digitally.
+# The KAK Mini Mart Inventory Management System is designed to help manage inventory records, products, suppliers, and categories in a more organized way. Instead of writing records manually, users can use the system to store and manage information digitally.
 
 Developers:
 Kevin Vila,
