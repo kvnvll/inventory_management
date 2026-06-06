@@ -427,7 +427,8 @@ body{
 
 </style>
 
-function importData()
+<script>
+    function importData()
 {
     let type =
         document.getElementById("importType").value;
@@ -454,7 +455,8 @@ function importData()
     {
         url = "/imports/" + type;
     }
-    else if(format == "json")
+
+    if(format == "json")
     {
         url = "/imports/" + type + "/json";
     }
@@ -491,8 +493,8 @@ function importData()
         alert("Import failed.");
 
     });
-
 }
+</script>
 
 </head>
 
@@ -675,49 +677,88 @@ function importData()
 </div>
 
 <!-- IMPORT CENTER -->
+<!-- IMPORT CENTER -->
 
 <div class="section">
 
-    <h2>Import Data</h2>
+    <div class="section-title">
+        Import Center
+    </div>
 
-<div class="card">
+    <div class="export-box">
 
-    <label>Import Type</label>
+        <div class="field">
 
-    <select id="importType">
-        <option value="products">Products</option>
-        <option value="categories">Categories</option>
-        <option value="suppliers">Suppliers</option>
-    </select>
+            <label>Import Type</label>
 
-    <br><br>
+            <select id="importType">
 
-    <label>Import Format</label>
+                <option value="products">
+                    Products
+                </option>
 
-    <select id="importFormat">
-        <option value="excel">Excel (.xlsx)</option>
-        <option value="csv">CSV</option>
-        <option value="json">JSON</option>
-    </select>
+                <option value="categories">
+                    Categories
+                </option>
 
-    <br><br>
+                <option value="suppliers">
+                    Suppliers
+                </option>
 
-    <label>Select File</label>
+            </select>
 
-    <input
-        type="file"
-        id="importFile"
-    >
+        </div>
 
-    <br><br>
+        <div class="field">
 
-    <button
-        onclick="importData()"
-        class="btn-primary">
+            <label>Import Format</label>
 
-        Import Data
+            <select id="importFormat">
 
-    </button>
+                <option value="excel">
+                    Excel (.xlsx/.xls)
+                </option>
+
+                <option value="csv">
+                    CSV
+                </option>
+
+                <option value="json">
+                    JSON
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="field">
+
+            <label>Select File</label>
+
+            <input
+                type="file"
+                id="importFile"
+                accept=".xlsx,.xls,.csv,.json"
+                style="
+                    width:100%;
+                    padding:14px;
+                    border:1px solid #dbe2ea;
+                    border-radius:12px;
+                    background:white;
+                "
+            >
+
+        </div>
+
+        <button
+            onclick="importData()"
+            class="export-btn">
+
+            Import Data
+
+        </button>
+
+    </div>
 
 </div>
 
