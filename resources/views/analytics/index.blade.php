@@ -429,51 +429,98 @@ body{
 
 <script>
 
+function downloadReport()
+{
+    let type =
+        document.getElementById("reportType").value;
+
+    let format =
+        document.getElementById("reportFormat").value;
+
+    window.location.href =
+        "/reports/" + type + "/" + format;
+}
+
+
 function importData()
 {
-    let type = document.getElementById('importType').value;
-    let format = document.getElementById('importFormat').value;
-    let file = document.getElementById('importFile').files[0];
+    let type =
+        document.getElementById("importType").value;
 
-    if(!file){
-        alert("Select a file.");
+    let format =
+        document.getElementById("importFormat").value;
+
+    let file =
+        document.getElementById("importFile").files[0];
+
+    if (!file)
+    {
+        alert("Please select a file.");
         return;
     }
 
     let formData = new FormData();
+
     formData.append("file", file);
 
-    let url = "/imports/" + type;
+    let url = "";
 
-    if(format == "json"){
+    if (format === "json")
+    {
         url = "/imports/" + type + "/json";
     }
+    else
+    {
+        // Excel / XLSX / CSV
+        url = "/imports/" + type;
+    }
 
-    fetch(url,{
-        method:"POST",
-        body:formData,
-        headers:{
+    fetch(url, {
+
+        method: "POST",
+
+        body: formData,
+
+        headers: {
+
             "X-CSRF-TOKEN":
-            document.querySelector('meta[name="csrf-token"]').content
+            document.querySelector(
+                'meta[name="csrf-token"]'
+            ).content
+
         }
+
     })
-    .then(async response=>{
+
+    .then(async response => {
 
         let text = await response.text();
 
-        console.log(text);
+        if(response.ok)
+        {
+            alert("Import Successful!");
 
-        alert(text);
+            location.reload();
+        }
+        else
+        {
+            console.log(text);
+
+            alert(text);
+        }
 
     })
-    .catch(error=>{
+
+    .catch(error => {
 
         console.log(error);
 
-        alert(error);
+        alert("Import failed.");
 
     });
+
 }
+
 </script>
 </head>
 
