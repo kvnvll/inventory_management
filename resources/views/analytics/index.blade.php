@@ -428,7 +428,8 @@ body{
 </style>
 
 <script>
-    function importData()
+
+function importData()
 {
     let type =
         document.getElementById("importType").value;
@@ -495,7 +496,6 @@ body{
     });
 }
 </script>
-
 </head>
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -603,22 +603,21 @@ body{
 
 </div>
 
-
-<!-- IMPORT CENTER -->
+<!-- EXPORT CENTER -->
 
 <div class="section">
 
     <div class="section-title">
-        Import Center
+        Export Center
     </div>
 
     <div class="export-box">
 
         <div class="field">
 
-            <label>Import Type</label>
+            <label>Report Type</label>
 
-            <select id="importType">
+            <select id="reportType">
 
                 <option value="products">
                     Products
@@ -632,26 +631,8 @@ body{
                     Suppliers
                 </option>
 
-            </select>
-
-        </div>
-
-        <div class="field">
-
-            <label>Import Format</label>
-
-            <select id="importFormat">
-
-                <option value="excel">
-                    Excel (.xlsx/.xls)
-                </option>
-
-                <option value="csv">
-                    CSV
-                </option>
-
-                <option value="json">
-                    JSON
+                <option value="analytics">
+                    Full Analytics
                 </option>
 
             </select>
@@ -660,34 +641,41 @@ body{
 
         <div class="field">
 
-            <label>Select File</label>
+            <label>Export Format</label>
 
-            <input
-                type="file"
-                id="importFile"
-                accept=".xlsx,.xls,.csv,.json"
-                style="
-                    width:100%;
-                    padding:14px;
-                    border:1px solid #dbe2ea;
-                    border-radius:12px;
-                    background:white;
-                "
-            >
+            <select id="reportFormat">
+
+    <option value="json">
+        JSON
+    </option>
+
+    <option value="csv">
+        CSV
+    </option>
+
+    <option value="xlsx">
+        Excel
+    </option>
+
+    <option value="pdf">
+        PDF
+    </option>
+
+</select>
 
         </div>
 
-        <button
-            onclick="importData()"
-            class="export-btn">
+        <button onclick="downloadReport()"
+                class="export-btn">
 
-            Import Data
+            Generate Report
 
         </button>
 
     </div>
 
 </div>
+
 <!-- IMPORT CENTER -->
 
 <div class="section">
