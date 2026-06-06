@@ -603,80 +603,7 @@ body{
 
 </div>
 
-<!-- EXPORT CENTER -->
 
-<div class="section">
-
-    <div class="section-title">
-        Export Center
-    </div>
-
-    <div class="export-box">
-
-        <div class="field">
-
-            <label>Report Type</label>
-
-            <select id="reportType">
-
-                <option value="products">
-                    Products
-                </option>
-
-                <option value="categories">
-                    Categories
-                </option>
-
-                <option value="suppliers">
-                    Suppliers
-                </option>
-
-                <option value="analytics">
-                    Full Analytics
-                </option>
-
-            </select>
-
-        </div>
-
-        <div class="field">
-
-            <label>Export Format</label>
-
-            <select id="reportFormat">
-
-    <option value="json">
-        JSON
-    </option>
-
-    <option value="csv">
-        CSV
-    </option>
-
-    <option value="xlsx">
-        Excel
-    </option>
-
-    <option value="pdf">
-        PDF
-    </option>
-
-</select>
-
-        </div>
-
-        <button onclick="downloadReport()"
-                class="export-btn">
-
-            Generate Report
-
-        </button>
-
-    </div>
-
-</div>
-
-<!-- IMPORT CENTER -->
 <!-- IMPORT CENTER -->
 
 <div class="section">
@@ -739,37 +666,6 @@ body{
                 type="file"
                 id="importFile"
                 accept=".xlsx,.xls,.csv,.json"
-                style="
-                    width:100%;
-                    padding:14px;
-                    border:1px solid #dbe2ea;
-                    border-radius:12px;
-                    background:white;
-                "
-            >
-
-        </div>
-
-        <button
-            onclick="importData()"
-            class="export-btn">
-
-            Import Data
-
-        </button>
-
-    </div>
-
-</div>
-
-        <div class="field">
-
-            <label>Select Excel File</label>
-
-            <input
-                type="file"
-                id="importFile"
-                accept=".xlsx,.xls"
                 style="
                     width:100%;
                     padding:14px;
