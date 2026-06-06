@@ -372,6 +372,7 @@ tr:hover{
 @endif
 
 <!-- HEADER -->
+```blade
 <div class="topbar">
 
     <div>
@@ -379,35 +380,55 @@ tr:hover{
         <div class="subtitle">Manage all products efficiently</div>
     </div>
 
-    <a href="/products/create" class="btn btn-add">
-        + Add Product
-    </a>
+    <div style="display:flex;gap:15px;align-items:center;">
 
+        <a href="/products/create" class="btn btn-add">
+            + Add Product
+        </a>
 
-<form action="/imports/products"
-      method="POST"
-      enctype="multipart/form-data"
-      style="display:flex;gap:10px;align-items:center;">
+        <form id="importForm"
+              method="POST"
+              enctype="multipart/form-data">
 
-    @csrf
+            @csrf
 
-    <input
-        type="file"
-        name="file"
-        required
-        accept=".xlsx,.xls,.csv"
-    >
+            <select id="importType"
+                    onchange="changeImportRoute()"
+                    style="padding:10px;border-radius:8px;">
 
-    <button
-        type="submit"
-        class="btn search-btn">
-        Import Excel
-    </button>
+                <option value="/imports/products">Products</option>
+                <option value="/imports/categories">Categories</option>
+                <option value="/imports/suppliers">Suppliers</option>
 
-</form>
+            </select>
 
+            <input
+                type="file"
+                name="file"
+                accept=".xlsx,.xls,.csv"
+                required>
+
+            <button
+                type="submit"
+                class="btn search-btn">
+                Import
+            </button>
+
+        </form>
+
+    </div>
 
 </div>
+
+<script>
+function changeImportRoute() {
+    document.getElementById('importForm').action =
+        document.getElementById('importType').value;
+}
+
+window.onload = changeImportRoute;
+</script>
+
 
 
 
