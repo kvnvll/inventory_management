@@ -185,10 +185,13 @@ Route::get('/activity-logs', [ActivityLogController::class, 'index']);
 
 
     /*
+/*
 |--------------------------------------------------------------------------
 | IMPORTS
 |--------------------------------------------------------------------------
 */
+
+// Excel / CSV Imports
 
 Route::post(
     '/imports/products',
@@ -205,6 +208,22 @@ Route::post(
     [ImportController::class, 'suppliers']
 );
 
+// JSON Imports
+
+Route::post(
+    '/imports/products/json',
+    [ImportController::class, 'productsJson']
+);
+
+Route::post(
+    '/imports/categories/json',
+    [ImportController::class, 'categoriesJson']
+);
+
+Route::post(
+    '/imports/suppliers/json',
+    [ImportController::class, 'suppliersJson']
+);
     /*
     |--------------------------------------------------------------------------
     | PDF REPORTS

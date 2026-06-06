@@ -427,68 +427,73 @@ body{
 
 </style>
 
-<script>
-
-function downloadReport()
-{
-    let type =
-        document.getElementById('reportType').value;
-
-    let format =
-        document.getElementById('reportFormat').value;
-
-    window.location.href =
-        '/reports/' + type + '/' + format;
-}
-
 function importData()
 {
     let type =
-        document.getElementById('importType').value;
+        document.getElementById("importType").value;
+
+    let format =
+        document.getElementById("importFormat").value;
 
     let file =
-        document.getElementById('importFile').files[0];
+        document.getElementById("importFile").files[0];
 
     if(!file)
     {
-        alert('Please select a file.');
+        alert("Please select a file.");
         return;
     }
 
     let formData = new FormData();
 
-    formData.append('file', file);
+    formData.append("file", file);
 
-    fetch('/import/' + type, {
+    let url = "";
 
-        method: 'POST',
+    if(format == "excel" || format == "csv")
+    {
+        url = "/imports/" + type;
+    }
+    else if(format == "json")
+    {
+        url = "/imports/" + type + "/json";
+    }
+
+    fetch(url, {
+
+        method: "POST",
 
         body: formData,
 
         headers: {
-            'X-CSRF-TOKEN':
+
+            "X-CSRF-TOKEN":
             document.querySelector(
                 'meta[name="csrf-token"]'
             ).content
+
         }
 
     })
+
     .then(response => response.text())
+
     .then(data => {
 
-        alert('Import completed successfully.');
+        alert("Import completed successfully.");
 
         location.reload();
 
     })
+
     .catch(error => {
 
-        alert('Import failed.');
+        alert("Import failed.");
 
     });
+
 }
 
-</script>
 </head>
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -673,33 +678,48 @@ function importData()
 
 <div class="section">
 
-    <div class="section-title">
+    <h2>Import Data</h2>
+
+<div class="card">
+
+    <label>Import Type</label>
+
+    <select id="importType">
+        <option value="products">Products</option>
+        <option value="categories">Categories</option>
+        <option value="suppliers">Suppliers</option>
+    </select>
+
+    <br><br>
+
+    <label>Import Format</label>
+
+    <select id="importFormat">
+        <option value="excel">Excel (.xlsx)</option>
+        <option value="csv">CSV</option>
+        <option value="json">JSON</option>
+    </select>
+
+    <br><br>
+
+    <label>Select File</label>
+
+    <input
+        type="file"
+        id="importFile"
+    >
+
+    <br><br>
+
+    <button
+        onclick="importData()"
+        class="btn-primary">
+
         Import Data
-    </div>
 
-    <div class="export-box">
+    </button>
 
-        <div class="field">
-
-            <label>Import Type</label>
-
-            <select id="importType">
-
-                <option value="products">
-                    Products
-                </option>
-
-                <option value="categories">
-                    Categories
-                </option>
-
-                <option value="suppliers">
-                    Suppliers
-                </option>
-
-            </select>
-
-        </div>
+</div>
 
         <div class="field">
 
