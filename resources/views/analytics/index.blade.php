@@ -688,7 +688,90 @@ body{
     </div>
 
 </div>
+<!-- IMPORT CENTER -->
 
+<div class="section">
+
+    <div class="section-title">
+        Import Center
+    </div>
+
+    <div class="export-box">
+
+        <div class="field">
+
+            <label>Import Type</label>
+
+            <select id="importType">
+
+                <option value="products">
+                    Products
+                </option>
+
+                <option value="categories">
+                    Categories
+                </option>
+
+                <option value="suppliers">
+                    Suppliers
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="field">
+
+            <label>Import Format</label>
+
+            <select id="importFormat">
+
+                <option value="excel">
+                    Excel (.xlsx/.xls)
+                </option>
+
+                <option value="csv">
+                    CSV
+                </option>
+
+                <option value="json">
+                    JSON
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="field">
+
+            <label>Select File</label>
+
+            <input
+                type="file"
+                id="importFile"
+                accept=".xlsx,.xls,.csv,.json"
+                style="
+                    width:100%;
+                    padding:14px;
+                    border:1px solid #dbe2ea;
+                    border-radius:12px;
+                    background:white;
+                "
+            >
+
+        </div>
+
+        <button
+            onclick="importData()"
+            class="export-btn">
+
+            Import Data
+
+        </button>
+
+    </div>
+
+</div>
 <!-- ANALYTICS GRID -->
 
 <div class="analytics-grid">
