@@ -383,6 +383,30 @@ tr:hover{
         + Add Product
     </a>
 
+
+<form action="/imports/products"
+      method="POST"
+      enctype="multipart/form-data"
+      style="display:flex;gap:10px;align-items:center;">
+
+    @csrf
+
+    <input
+        type="file"
+        name="file"
+        required
+        accept=".xlsx,.xls,.csv"
+    >
+
+    <button
+        type="submit"
+        class="btn search-btn">
+        Import Excel
+    </button>
+
+</form>
+
+
 </div>
 
 
