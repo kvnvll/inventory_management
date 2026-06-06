@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Products Report</title>
 
     <style>
         body{
-            font-family: Arial, sans-serif;
+            font-family: DejaVu Sans, Arial, sans-serif;
             font-size:12px;
         }
 
@@ -26,10 +27,12 @@
         th{
             background:#f2f2f2;
             padding:8px;
+            text-align:center;
         }
 
         td{
             padding:6px;
+            text-align:center;
         }
     </style>
 </head>
@@ -58,7 +61,7 @@
             <td>{{ $product->barcode }}</td>
             <td>{{ $product->category?->name }}</td>
             <td>{{ $product->supplier?->name }}</td>
-            <td>₱{{ number_format($product->price,2) }}</td>
+            <td>PHP {{ number_format($product->price, 2) }}</td>
             <td>{{ $product->stock }}</td>
         </tr>
         @endforeach
