@@ -4,24 +4,21 @@ namespace App\Imports;
 
 use App\Models\Product;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class ProductsImport implements ToModel
+class ProductsImport implements ToModel, WithHeadingRow
 {
     public function model(array $row)
     {
-        if ($row[0] === 'supplier_id') {
-            return null;
-        }
-
         return new Product([
-            'supplier_id'      => $row[0],
-            'category_id'      => $row[1],
-            'name'             => $row[2],
-            'barcode'          => $row[3],
-            'price'            => $row[4],
-            'stock'            => $row[5],
-            'low_stock_limit'  => $row[6],
-            'expiration_date'  => $row[7],
+            'supplier_id'     => $row['supplier_id'],
+            'category_id'     => $row['category_id'],
+            'name'            => $row['name'],
+            'barcode'         => $row['barcode'],
+            'price'           => $row['price'],
+            'stock'           => $row['stock'],
+            'low_stock_limit' => $row['low_stock_limit'],
+            'expiration_date' => $row['expiration_date'],
         ]);
     }
 }
