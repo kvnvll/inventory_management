@@ -431,67 +431,46 @@ body{
 
 function importData()
 {
-    let type =
-        document.getElementById("importType").value;
+    let type = document.getElementById('importType').value;
+    let format = document.getElementById('importFormat').value;
+    let file = document.getElementById('importFile').files[0];
 
-    let format =
-        document.getElementById("importFormat").value;
-
-    let file =
-        document.getElementById("importFile").files[0];
-
-    if(!file)
-    {
-        alert("Please select a file.");
+    if(!file){
+        alert("Select a file.");
         return;
     }
 
     let formData = new FormData();
-
     formData.append("file", file);
 
-    let url = "";
+    let url = "/imports/" + type;
 
-    if(format == "excel" || format == "csv")
-    {
-        url = "/imports/" + type;
-    }
-
-    if(format == "json")
-    {
+    if(format == "json"){
         url = "/imports/" + type + "/json";
     }
 
-    fetch(url, {
-
-        method: "POST",
-
-        body: formData,
-
-        headers: {
-
+    fetch(url,{
+        method:"POST",
+        body:formData,
+        headers:{
             "X-CSRF-TOKEN":
-            document.querySelector(
-                'meta[name="csrf-token"]'
-            ).content
-
+            document.querySelector('meta[name="csrf-token"]').content
         }
+    })
+    .then(async response=>{
+
+        let text = await response.text();
+
+        console.log(text);
+
+        alert(text);
 
     })
+    .catch(error=>{
 
-    .then(response => response.text())
+        console.log(error);
 
-    .then(data => {
-
-        alert("Import completed successfully.");
-
-        location.reload();
-
-    })
-
-    .catch(error => {
-
-        alert("Import failed.");
+        alert(error);
 
     });
 }
