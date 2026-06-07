@@ -4,242 +4,232 @@
 
 The KAK Mini Mart Inventory Management System is designed to help manage inventory records, products, suppliers, and categories in a more organized way. Instead of writing records manually, users can use the system to store and manage information digitally.
 
-Developers:
-Kevin Vila,
-Kaela Ashley Nicole Zabat, and
-Aaron Daniel Legayo
+**Developers:**
+- Kevin Vila
+- Kaela Ashley Nicole Zabat
+- Aaron Daniel Legayo
 
+**Modules**
+- Login & Authentication
+- Dashboard
+- Product Management
+- Category Management
+- Supplier Management
+- Inventory Management
+- Stock Monitoring
+- Analytics
+- Activity Logs
+- Reports
+- Import Functionality
+
+**System Overview**
 The system begins with the Login page. Users must enter their email and password before they can access the system. Laravel verifies the login credentials and creates a session for the user. If the credentials are correct, the user is redirected to the Dashboard. If not, the system displays an error message.
 
 After logging in, the user can access different modules of the system through the navigation menu.
 
+**Dashboard**
+The Dashboard serves as the main page of the system. It gives users a quick overview of the inventory status.
 
-The Dashboard serves as the main page of the system. It gives users a quick overview of the inventory status. It displays information such as:
+It displays information such as:
+- Total number of products
+- Total number of categories
+- Total number of suppliers
+- Inventory statistics
+- Recent system activities
 
-* Total number of products
-* Total number of categories
-* Total number of suppliers
-* Inventory statistics
-* Recent system activities
-
-This allows users to quickly monitor important information without opening multiple pages.
-
-
-The Product Management module allows users to manage all products stored in the inventory.
-
+**Product Management**
 Users can:
-
-* Add new products
-* View product information
-* Edit existing products
-* Delete products
-* Monitor stock quantities
+- Add new products
+- View product information
+- Edit existing products
+- Delete products
+- Monitor stock quantities
 
 When a user creates a product, the system collects information such as the product name, category, supplier, price, and stock quantity. The ProductController processes the request and sends the data to the Product Model. The model then saves the information into the database.
 
-When products are updated or deleted, the system automatically reflects the changes in the product list.
-
-
+**Category Management**
 Categories help organize products into different groups.
 
-For example:
+Examples:
 
-* Beverages
-* Snacks
-* Canned Goods
-* Household Items
+- Beverages
+- Snacks
+- Canned Goods
 
-Users can create, edit, view, and delete categories. When a product is created, it can be assigned to a category. This makes products easier to find and manage.
+Users can create, edit, view, and delete categories.
 
 The CategoryController handles all category-related requests while the Category Model communicates with the database.
 
+Supplier Management
 
-The Supplier module stores information about suppliers who provide products to the mini mart.
+Allows users to:
 
-Users can:
+Add suppliers
+View supplier information
+Update supplier records
+Delete suppliers
 
-* Add suppliers
-* View supplier information
-* Update supplier records
-* Delete suppliers
+Supplier records may include supplier names, contact information, and addresses.
 
-Supplier information may include the supplier name, contact details, and address. Having supplier records stored in the system makes it easier to track where products come from and who to contact when restocking inventory.
+Inventory Management
 
-The Inventory module is one of the main parts of the system.
+Allows users to:
 
-It helps users:
+Monitor stock levels
+Track inventory changes
+Update stock quantities
+Manage inventory records
+Stock Movement Tracking
 
-* Monitor stock levels
-* Track inventory changes
-* Update stock quantities
-* Manage inventory records
+Records inventory activities such as:
 
-Whenever products are added, updated, or restocked, the inventory records are also updated. This helps ensure that stock information remains accurate.
+Adding stock
+Updating stock quantities
+Removing stock
+Inventory adjustments
+Analytics
 
-The system can help prevent inventory problems by allowing users to see current stock quantities at any time.
+Provides inventory insights including:
 
-The system records stock movements whenever inventory changes occur.
+Inventory statistics
+Stock monitoring
+Inventory trends
+Restocking recommendations
+Activity Logs
 
-Examples include:
+Records system activities such as:
 
-* Adding new stock
-* Updating stock quantities
-* Removing stock
-* Inventory adjustments
+User Login
+Product Creation
+Product Updates
+Product Deletion
+Category Management
+Supplier Management
+Reports
 
-These records help users keep track of how inventory changes over time.
+Allows users to generate inventory-related reports including:
 
-By maintaining stock movement records, the business can better understand inventory usage and monitor product availability.
+Product Lists
+Inventory Summaries
+Stock Information
+Supplier Records
+Import Functionality
 
-The Analytics section provides useful information about inventory data.
+Allows bulk importing of:
 
-This module helps users:
+Products
+Categories
+Suppliers
 
-* View inventory statistics
-* Monitor stock levels
-* Analyze inventory trends
-* Identify products that may need restocking
+This reduces manual data entry and improves efficiency.
 
-The analytics data is displayed in a simple format to help users make better decisions regarding inventory management.
+Database Tables
 
-
-The Activity Log module records actions performed by users within the system.
-
-Examples of recorded activities include:
-
-* User login
-* Product creation
-* Product updates
-* Product deletion
-* Category management
-* Supplier management
-
-The system stores these actions in the activity_logs table.
-
-This feature helps maintain accountability and allows administrators to review system activities whenever necessary.
-
-The Reports module allows users to generate and view inventory-related reports.
-
-Reports may include:
-
-* Product lists
-* Inventory summaries
-* Stock information
-* Supplier-related records
-
-These reports can help users review inventory status and support business decision-making.
-
-To make data entry faster, the system includes import functionality.
-
-Users can import:
-
-* Products
-* Categories
-* Suppliers
-
-This reduces the time required to manually enter large amounts of information into the system.
-
-
-The system uses a database to store all information.
+The system uses a database to store inventory information.
 
 Important tables include:
 
-* users
-* products
-* categories
-* suppliers
-* inventories
-* stock_movements
-* activity_logs
-
-Whenever a user performs an action, Laravel communicates with the database using Eloquent ORM. This allows the system to create, read, update, and delete records efficiently.
-
+users
+products
+categories
+suppliers
+inventories
+stock_movements
+activity_logs
+System Architecture
 
 The system follows Laravel's MVC (Model-View-Controller) architecture.
 
 Models
-
-* Handle database operations.
-* Represent database tables.
-* Manage relationships between data.
-
+Handle database operations
+Represent database tables
+Manage relationships between data
 Views
-
-* Display information to users.
-* Show forms, tables, and reports.
-* Provide the user interface.
-
+Display information to users
+Show forms, tables, and reports
+Provide the user interface
 Controllers
+Receive user requests
+Process data
+Communicate with models
+Return views to users
 
-* Receive user requests.
-* Process data.
-* Communicate with models.
-* Return views to users.
+The system uses Laravel Eloquent ORM to efficiently perform Create, Read, Update, and Delete (CRUD) operations.
 
-Using MVC helps keep the project organized and easier to maintain.
-
-Overall System Flow
-
-1. User logs into the system.
-2. Dashboard displays inventory information.
-3. User manages products, categories, and suppliers.
-4. Data is processed by controllers.
-5. Models communicate with the database.
-6. Inventory records are updated.
-7. Stock movements are recorded.
-8. Activity logs track user actions.
-9. Reports and analytics provide useful information.
-10. Users can monitor inventory and manage business operations more efficiently.
-
-Overall, the KAK Mini Mart Inventory Management System helps simplify inventory management by providing a centralized platform for storing, updating, and monitoring inventory-related information. The system improves organization, reduces manual work, and helps users maintain accurate inventory records.
-
-Hosting link (https://inventorymanagement-production-393a.up.railway.app)
-
+System Flow
+User logs into the system.
+Dashboard displays inventory information.
+User manages products, categories, and suppliers.
+Controllers process user requests.
+Models communicate with the database.
+Inventory records are updated.
+Stock movements are recorded.
+Activity logs track user actions.
+Reports and analytics provide useful information.
 Installation
+GitHub Clone
 
-You can choose one from multiple ways for installation.
-GitHub Fork/Clone
-Fork the repository.
+Clone the repository:
 
-Clone to your machine:
 git clone https://github.com/yourusername/inventory_management.git
 
+Navigate to the project directory:
+
+cd inventory_management
+
 Install dependencies:
+
 composer install
 
 Copy the environment file:
+
 cp .env.example .env
 
 Generate the application key:
+
 php artisan key:generate
 
-Run the migrations:
+Configure your database connection inside the .env file.
+
+Run migrations:
+
 php artisan migrate
 
-Install and build frontend assets:
+Install frontend dependencies:
+
 npm install
 npm run build
 
-Start the local server:
+Start the development server:
+
 php artisan serve
-
-
 Requirements
-
 PHP 8.4+
 Composer
-Node.js & NPM
-SQLite (default) or MySQL 8.0+
+Node.js
+NPM
+SQLite (Default)
+MySQL 8.0+
 Laravel 13
-
 Demo Credentials
-EmailPasswordadmin@example.compassword
-What's Included?
+Email	Password
+admin@example.com	password
+Technologies Used
+Laravel 13
+Laravel Sanctum
+Laravel Breeze
+Laravel DomPDF
+Maatwebsite Excel
+League CSV
+Milon Barcode
+MySQL
+Blade Templating Engine
+Eloquent ORM
+Hosting Link
 
-Laravel 13 [MIT] - The PHP framework for web artisans.
-Laravel Sanctum [MIT] - Lightweight API token authentication for Laravel.
-Laravel Breeze [MIT] - Minimal authentication scaffolding for Laravel.
-Laravel DomPDF [MIT] - A PDF generation wrapper for Laravel.
-Maatwebsite Excel [MIT] - Excel and CSV import/export package for Laravel.
-League CSV [MIT] - CSV data manipulation library for PHP.
-Milon Barcode [MIT] - Barcode generation library for Laravel.
+https://inventorymanagement-production-393a.up.railway.app
+
+License
+
+This project was developed for educational purposes only.
+
