@@ -194,3 +194,52 @@ Overall System Flow
 Overall, the KAK Mini Mart Inventory Management System helps simplify inventory management by providing a centralized platform for storing, updating, and monitoring inventory-related information. The system improves organization, reduces manual work, and helps users maintain accurate inventory records.
 
 Hosting link (https://inventorymanagement-production-393a.up.railway.app)
+
+Installation
+
+You can choose one from multiple ways for installation.
+GitHub Fork/Clone
+Fork the repository.
+
+Clone to your machine:
+git clone https://github.com/yourusername/inventory_management.git
+
+Install dependencies:
+composer install
+
+Copy the environment file:
+cp .env.example .env
+
+Generate the application key:
+php artisan key:generate
+
+Run the migrations:
+php artisan migrate
+
+Install and build frontend assets:
+npm install
+npm run build
+
+Start the local server:
+php artisan serve
+
+
+Requirements
+
+PHP 8.4+
+Composer
+Node.js & NPM
+SQLite (default) or MySQL 8.0+
+Laravel 13
+
+Demo Credentials
+EmailPasswordadmin@example.compassword
+What's Included?
+
+Laravel 13 [MIT] - The PHP framework for web artisans.
+Laravel Sanctum [MIT] - Lightweight API token authentication for Laravel.
+Laravel Breeze [MIT] - Minimal authentication scaffolding for Laravel.
+Laravel DomPDF [MIT] - A PDF generation wrapper for Laravel.
+Maatwebsite Excel [MIT] - Excel and CSV import/export package for Laravel.
+League CSV [MIT] - CSV data manipulation library for PHP.
+Milon Barcode [MIT] - Barcode generation library for Laravel.

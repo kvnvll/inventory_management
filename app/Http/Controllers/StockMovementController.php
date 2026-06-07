@@ -1,65 +1,78 @@
 <?php
-
+ 
 namespace App\Http\Controllers;
-
+ 
 use App\Models\StockMovement;
 use Illuminate\Http\Request;
-
+ 
 class StockMovementController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $stockMovements = StockMovement::all();
+ 
+        if ($request->expectsJson()) {
+            return response()->json($stockMovements);
+        }
+ 
+        return response()->json($stockMovements);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
+ 
     public function create()
     {
         //
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+ 
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'product_id' => 'required',
+            'quantity'   => 'required|numeric',
+            'type'       => 'required',
+        ]);
+ 
+        $stockMovement = StockMovement::create($request->all());
+ 
+        if ($request->expectsJson()) {
+            return response()->json($stockMovement, 201);
+        }
+ 
+        return response()->json($stockMovement, 201);
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(StockMovement $stockMovement)
+ 
+    public function show(Request $request, StockMovement $stockMovement)
     {
-        //
+        if ($request->expectsJson()) {
+            return response()->json($stockMovement);
+        }
+ 
+        return response()->json($stockMovement);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
+ 
     public function edit(StockMovement $stockMovement)
     {
         //
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
+ 
     public function update(Request $request, StockMovement $stockMovement)
     {
-        //
+        $stockMovement->update($request->all());
+ 
+        if ($request->expectsJson()) {
+            return response()->json($stockMovement);
+        }
+ 
+        return response()->json($stockMovement);
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(StockMovement $stockMovement)
+ 
+    public function destroy(Request $request, StockMovement $stockMovement)
     {
-        //
+        $stockMovement->delete();
+ 
+        if ($request->expectsJson()) {
+            return response()->json(['message' => 'Stock movement deleted successfully.']);
+        }
+ 
+        return response()->json(['message' => 'Stock movement deleted successfully.']);
     }
 }
